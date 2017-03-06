@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .fir {
+            width: 500px;
+            height: 400px;
+            background-color: antiquewhite;
+        }
+
+        .sec {
+            width: 500px;
+            height: 400px;
+            background-color: azure;
+        }
+
+        .thd {
+            width: 500px;
+            height: 400px;
+            background-color: blueviolet;
+        }
+
+        .fou {
+            border: 10px solid chartreuse;
+            width: 400px;
+            height: 400px;
+        }
+
+        .c1 {
+            width: 50px;
+            height: 50px;
+            border: 2px solid blue;
+        }
+
+        .c2 {
+            width: 50px;
+            height: 50px;
+            border: 2px solid red;
+        }
+    </style>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>Hello App!</h1>
+
+    <p>
+        <!-- 使用er-link> 默认会被渲染成一个 `<a>` 标签 -->
+        <router-link to="/fir/1">Go to 1</router-link>
+        <br/>
+        <router-link to="/sec/2">Go to 2</router-link>
+        <br/>
+        <router-link to="/thd/3">Go to 3</router-link>
+        <br/>
+
+        <router-link to="/fou">Go to 1profile</router-link>
+    </p>
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <router-view></router-view>
+</div>
+
+
+<script>
+    /*import Vue from 'vue';
+     import VueRouter from 'vue-router';
+     Vue.use(VueRouter)*/
+    const fir = {template: '<div class="fir">id:{{$route.params.id}}</div>'}
+    const sec = {template: '<div class="sec"></div>'}
+    const thd = {template: '<div class="thd"></div>'}
+    const UserProfile = {template: '<div class="c1"></div>'}
+    const UserPosts = {template: '<div class="c2"></div>'}
+
+
+    const fou = {
+        template: `
+        <div class="fou">
+            <p>this is four page</p>
+            <router-link to="profile">Go to 1profile</router-link>
+            <br/>
+            <router-link to="/fou/posts">Go to 1posts</router-link><br/>
+            <router-view></router-view>
+        </div>
+    `
+    }
+
+    const router = new VueRouter({
+        routes: [
+            {
+                path: '/fou', component: fou, child: [
+                {
+                    path: 'profile',
+                    component: UserProfile
+                }, {
+                    path: 'posts',
+                    component: UserPosts
+
+                }
+            ]
+            },
+            //sec/19?id=1&name=adsf
+            {path: '/sec/:id', component: sec},
+            {path: '/thd/:id', component: thd},
+            {path: '/fir/:id', component: fir}
+        ]
+    })
+    /*const app = new Vue({
+     router
+     }).$mount('#app')
+     */
+    new Vue({
+        router,
+        el: '#app',
+        data: {
+            id: 123,
+            name: 'fox',
+            age: 98
+        },
+        methods: {}
+    })
+</script>
+</body>
+</html>

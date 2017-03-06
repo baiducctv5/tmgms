@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title></title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div id="counter-event-example">
+    <currency-input v-model="price"></currency-input>
+</div>
+</body>
+<script type="text/javascript">
+    //'<span><input ref="input" v-bind:value="value" v-on:input="updataValue($event.target.value)"></span>',
+    Vue.component('currency-input', {
+        template: `<span>
+                        <input ref='input' v-bind:value='value' v-on:input='updateValue($event.target.value)'>
+            </span>`,
+        props: ['value'],
+        methods: {
+            updateValue: function (value) {
+                var formattedValue = value.trim().slice(0, value.indexOf('.') + 3);
+                console.log(formattedValue)
+                if (formattedValue !== value) {
+                    this.$refs.input.value = formattedValue
+                }
+                this.$emit('input', Number(formattedValue))
+            }
+        }
+    })
+    new Vue({
+        el: "#counter-event-example",
+        data: {}
+    })
+</script>
+</html>

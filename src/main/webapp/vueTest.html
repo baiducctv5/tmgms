@@ -1,0 +1,45 @@
+<%--
+Created by IntelliJ IDEA.
+User: Administrator
+Date: 2017/2/14
+Time: 10:58
+To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title></title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+<body id="body">
+<button type="button" v-on:click="btnClick()">{{name}}</button>
+</body>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "button",
+        data: {
+            name: 'Vue.js'
+        },
+        methods: {
+            btnClick: function () {
+                $.ajax({
+                    type: "get",
+                    url: "http://localhost:8080/tmgms/vue/showMsg.do",
+                    async: true,
+                    success: function (data) {
+                        vm.name = "<div v-html="
+                        rawHtml
+                        "></div>";
+                    }
+                });
+            }
+        },
+
+    })
+</script>
+</html>

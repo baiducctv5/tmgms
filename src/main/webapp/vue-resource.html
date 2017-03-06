@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入样式 -->
+    <!-- 引入组件库 -->
+    <script src="js/vue.js"></script>
+    <script src="js/vue-resource.js"></script>
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="getMsg">getMsg按钮</button>
+    {{getName}}<br/>
+    <button @click="postMsg">postMsg按钮</button>
+    {{postName}}<br/>
+    <button @click="deleteMsg">deleteMsg按钮</button>
+    {{getName}}<br/>
+    <button @click="getMsg">按钮</button>
+    {{getName}}<br/>
+    <button @click="getMsg">按钮</button>
+    {{getName}}<br/>
+</div>
+</body>
+<script>
+
+    new Vue({
+        el: '#app',
+        data: {
+            postName: "",
+            getName: ""
+        },
+        methods: {
+            getMsg: function () {
+                var vm = this;
+                this.$http.get('http://localhost:8888/tmgms/vue/getMsg.do?id=id1').then(
+                        /*
+                         r => {
+                         console.log(r);
+                         console.log(typeof r);
+                         vm.getName = r.data.idmsg +"---------" + r.data.data
+                         }
+                         */
+                        function (r) {
+                            console.log(r);
+                            console.log(typeof r);
+                            vm.getName = r.data.idmsg + "---------" + r.data.data
+                        }
+                )
+            },
+            postMsg: function () {
+                var vm = this;
+                var isp = {emulateJSON: true}//post中设置的方式
+                //Vue.http.options.emulateJSON = true;
+                var p = {name: "zhangsan", id: "aaaa"}
+
+                this.$http.post("http://localhost:8888/tmgms/vue/postMsg.do", p, {emulateJSON: true}).then(function (r) {
+                    vm.postName = r.data.idmsg + '_______' + r.data.namemsg + '_______' + r.data.data;
+                })
+
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,5 @@
+学生表 Student
+
+教师表 Teacher
+
+课程表
